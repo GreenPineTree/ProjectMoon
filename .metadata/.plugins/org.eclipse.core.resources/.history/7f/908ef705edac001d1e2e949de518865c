@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration> 
+	<!-- DB 테이블과 컬럼들을 mapper에 매핑을 위한 변수 선언-->
+	<properties>
+		<!-- 
+		* property
+		- name : mapper.xml에서 사용될 이름
+		- value : DB 테이블 및 컬럼 이름
+		 -->
+		 <!-- 메인 게시판 -->
+		 <property name="board_table" value="board_table"/>
+		 <property name="boardNo" value="board_no"/>
+		 <property name="boardTitle"  value="board_title"/>
+		 <property name="boardContent" value="board_content"/>
+		 <property name="userid" value="userid"/>
+		 <property name="boardCdate" value="board_cdate"/>
+		 <property name="boardReplyCount" value="board_reply_count"/>
+		 
+		 <!-- 메인 댓글 -->
+		 <property name="board_reply" value="board_reply"/>
+		 <property name="boardReplyNo" value="board_reply_no"/>
+		 <property name="boardNo" value="board_no"/>
+		 <property name="userid" value="userid"/>
+		 <property name="boardReplyTitle" value="board_reply_title"/>
+		 <property name="boardReplyContent" value="board_reply_content"/>
+		 <property name="boardReplyCdate" value="board_reply_cdate"/>
+		 <property name="boardReplyStar" value="board_reply_star"/>
+		 
+		 <!-- 커뮤니티 게시판 -->
+		 <property name="community_table" value="community_table"/>
+		 <property name="coNo" value="co_no"/>
+		 <property name="userid" value="userid"/>
+		 <property name="coTitle" value="co_title"/>
+		 <property name="coContent" value="co_content"/>
+		 <property name="coCdate" value="co_cdate"/>
+		 <property name="coHashtag" value="co_hashtag"/>
+		 <property name="coLikeCount" value="co_like_count"/>
+		 <property name="coReplyCount" value="co_reply_count"/>
+		 <property name="coPictures" value="co_pictures"/>
+		 <property name="coScrapCount" value="co_scrap_count"/>
+		 <property name="coThumnail" value="co_thumnail"/>
+
+		 
+		 <!-- 커뮤니티 댓글 -->
+		 <property name="community_reply" value="community_reply"/>
+		 <property name="coReplyNo" value="co_reply_no"/>
+		 <property name="coNo" value="co_no"/>
+		 <property name="userid" value="userid"/>
+		 <property name="coReplyContent" value="co_reply_content"/>
+		 <property name="coReplyCdate" value="co_reply_cdate"/>
+		 
+		 <!-- 회원가입 -->
+		 <property name="member_table" value="member_table"/>
+		 <property name="userid" value="userid"/>
+		 <property name="password" value="password"/>
+		 <property name="phone" value="phone"/>
+		 <property name="memberCategory" value="member_category"/>
+		 <property name="memberClass" value="member_class"/>
+		 <property name="noteCount" value="note_count"/>
+		 <property name="followCount" value="follow_count"/>
+		 <property name="join" value="join"/>
+		 
+		 <!-- 상품 선택 -->
+		 <property name="board_option" value="board_option"/>
+		 <property name="boardNo" value="board_no"/>
+		 <property name="boardProductName" value="board_product_name"/>
+		 <property name="boardPrice" value="board_price"/>
+		 <property name="boardProductNo" value="board_product_no"/>
+		
+		 <!-- 장바구니 -->
+		 <property name="board_cart" value="board_cart"/>
+		 <property name="userid" value="userid"/>
+		 <property name="boardNo" value="board_no"/>
+		 <property name="boardProductNo" value="board_product_no"/>
+		 <property name="boardProductName" value="board_product_name"/>
+		 <property name="boardWholePrice" value="board_whole_price"/>
+		 <property name="cartCount" value="cart_count"/> 
+		 
+		 <!-- 인테리어시공 게시판 -->
+		 <property name="interior_execution_table" value="interior_execution_table"/>
+		 <property name="userid" value="userid"/>
+		 <property name="ieNo" value="ie_no"/>
+		 <property name="ieTitle" value="ie_title"/>
+		 <property name="ieContent" value="ie_content"/>
+		 <property name="ieCdate" value="ie_cdate"/>
+		 <property name="ieReplyCount" value="ie_reply_count"/>
+		 
+		 <!-- 인테리어 댓글 -->
+		 <property name="interior_execution_reply" value="interior_execution_reply"/>
+		 <property name="userid" value="userid"/>
+		 <property name="ieReplyNo" value="ie_reply_no"/>
+		 <property name="ieNo" value="ie_no"/>
+		 <property name="ieReplyContent" value="ie_reply_content"/>
+		 <property name="ieReplyCdate" value="ie_reply_cdate"/>
+		 <property name="ieReplyCount" value="ie_reply_count"/>
+
+
+
+		 <!-- 스크랩 -->
+		 <property name="scrap_table" value="scrap_table"/>
+		 <property name="scrapid" value="scrapid"/>
+		 <property name="coNo" value="co_no"/>
+		 
+		 
+		 
+		 <!-- 좋아요 -->
+		 <property name="like_table" value="like_table"/>
+		 <property name="userid" value="userid"/>
+		 <property name="coNo" value="co_no"/>
+		 
+		 <!-- 쪽지함 -->
+		 <property name="note_table" value="note_table"/>
+		 <property name="toUserid" value="to_userid"/>
+		 <property name="fromUserid" value="from_userid"/>
+		 <property name="noteTitle" value="note_title"/>
+		 <property name="noteContent" value="note_content"/>
+		 <property name="noteCdate" value="note_cdate"/>
+		 <property name="noteNo" value="note_no"/>
+		 <property name="noteFollow" value="note_follow"/>
+		 <property name="noteConfirm" value="note_confirm"/>
+		 
+		  
+		 <!-- 팔로우 -->
+		 <property name="follow_table" value="follow_table"/>
+		 <property name="followid" value="follow_id"/>
+		 <property name="followerid" value="follower_id"/>
+		  	</properties>
+	
+	<!-- underscore 명명법을 camel 명명법으로 가능하도록 세팅 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
+	<!-- typeAlises : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
+	<typeAliases>
+		<package name="com.projectmoon.domain"/>
+	</typeAliases>
+
+</configuration>
+

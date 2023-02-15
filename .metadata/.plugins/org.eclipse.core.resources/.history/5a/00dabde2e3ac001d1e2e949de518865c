@@ -1,0 +1,5 @@
+package com.projectmoon.persistence;
+
+public interface AccountBookDaoImpl {
+
+}

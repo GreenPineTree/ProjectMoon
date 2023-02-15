@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+	">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- <bean destroy-method="close"
+		class="oracle.jdbc.pool.OracleDataSource" id="ds">
+		<property value="ds" name="dataSourceName" />
+		<property value="jdbc:oracle:thin:@172.16.3.5:1521:xe" name="URL" />
+		<property value="scott" name="user" />
+		<property value="tiger" name="password" />
+	</bean>
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
+		id="sqlSessionFactory">
+		<property name="dataSource" ref="ds" />
+		<property value="classpath:/mybatis-config.xml" name="configLocation" />
+		<property value="classpath:mappers/*.xml" name="mapperLocations" />
+		classpath == src/main/resources
+	</bean> -->
+
+	<bean destroy-method="clearCache"
+		class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Spring에서 제공하는 DB Transaction Manager를 bean으로 등록 -->
+	<!-- <bean
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="ds" />
+	</bean> -->
+	
+	<!-- base-package 밑의 클래스들 중에서 @Component로 등록된 클래스들을 bean으로 생성해서 관리 Persistence/Service 
+		Layer의 컴포넌트 클래스들을 bean으로 등록 -->
+	<context:component-scan
+		base-package="com.projectmoon" />
+</beans>

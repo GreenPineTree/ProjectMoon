@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.projectmoon.service.AccountBookService"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.AccountBookDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.AccountBookVO"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.FinancialStatementsService"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.FinancialStatementsDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.FinancialStatementsVO"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.StockService"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.StockDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.StockVO"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.WorldnewsService"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.WorldnewsDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.WorldnewsVO"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.AccountBookDaoImple"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+</qualifiedTypeNameHistroy>

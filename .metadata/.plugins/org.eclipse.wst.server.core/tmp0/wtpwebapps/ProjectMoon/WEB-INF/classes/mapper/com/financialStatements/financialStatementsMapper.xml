@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectmoon.persistence.FinancialStatementsMapper">
+<!-- 		<resultMap type="HashMap" id="ListInMap"> -->
+<!-- 		<result property="kcode" column="kcode"/> -->
+<!-- 		<result property="kname" column="kname"/> -->
+<!-- 		<result property="kbday" column="kbday"/> -->
+<!-- 		<result property="kstbit" column="kstbit"/> -->
+<!-- 		<result property="kindate" column="kindate"/> -->
+<!-- 		<result property="scode" column="scode"/> -->
+<!-- 		<result property="sname" column="sname"/> -->
+<!-- 		<result property="bname" column="bname"/> -->
+<!-- 		<result property="tname" column="tname"/> -->
+<!-- 		<result property="jjjname" column="jjjname"/> -->
+<!-- 		<result property="name" column="name"/> -->
+<!-- 		<result property="ilday" column="ilday"/> -->
+<!-- 		<result property="score" column="score"/> -->
+<!-- 		<result property="yymm" column="yymm"/> -->
+<!-- 		<result property="kkjcode" column="kkjcode"/> -->
+<!-- 		<result property="kkjname" column="kkjname"/> -->
+<!-- 	</resultMap> -->
+	
+	<!-- 기업 정보입력 -->
+	<insert id="InsertCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		INSERT INTO COMPANY (
+			country
+			, market
+			, ticker
+			, name
+			, sector
+			, subSector
+			, remark
+		)
+		values (
+			#{country}
+			, #{market}
+			, #{ticker}
+			, #{name}
+			, #{sector}
+			, #{subSector}
+			, #{remark}
+		)
+		
+	</insert>
+
+	<!-- 기업 재무상태표 입력 -->
+	<insert id="InsertFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		INSERT INTO FINANCIAL_STATEMENTS (
+			country
+			, market
+			, ticker
+			, name
+			, year
+			, quarters
+			, assets
+			, debts
+			, capital
+			, revenue
+			, cost
+			, tax
+			, netIncome
+			, per
+			, roe
+		)
+		values (
+			#{country}
+			, #{market}
+			, #{ticker}
+			, #{name}
+			, #{year}
+			, #{quarters}
+			, #{assets}
+			, #{debts}
+			, #{capital}
+			, #{revenue}
+			, #{cost}
+			, #{tax}
+			, #{netIncome}
+			, #{per}
+			, #{roe}
+		)
+		
+	</insert>	
+	
+	<!-- 기업 정보 목록 가져오기 -->
+	<select id="SelectCompanyList" parameterType="com.projectmoon.domain.FinancialStatementsVO" resultType="com.projectmoon.domain.FinancialStatementsVO">
+		SELECT
+			country
+			, market
+			, ticker
+			, name
+			, sector
+			, subSector
+			, remark
+		FROM COMPANY
+		WHERE 1=1
+			<if test="country != null and country != ''">
+				and country = #{country}
+			</if>
+			<if test="market != null and market != ''">
+				and market = #{market}
+			</if>
+			<if test="ticker != null and ticker != ''">
+				and ticker = #{ticker}
+			</if>
+			<if test="sector != null and sector != ''">
+				and sector = #{sector}
+			</if>
+			<if test="subSector != null and subSector != ''">
+				and subSector = #{subSector}
+			</if>
+			
+	</select>
+
+	<!-- 기업 재무상태표 가져오기 -->
+	<select id="SelectFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO" resultType="com.projectmoon.domain.FinancialStatementsVO">
+		SELECT
+			country
+			, market
+			, ticker
+			, year
+			, quarters
+			, assets
+			, debts
+			, capital
+			, revenue
+			, cost
+			, tax
+			, netIncome
+			, per
+			, roe
+		FROM FINANTIAL_STATEMENTS
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+			<if test="year != null and year != ''">
+				and year = #{year}
+			</if>
+			<if test="quarters != null and quarters != ''">
+				and quarters = #{quarters}
+			</if>
+			
+	</select>
+
+	<!-- 기업 정보 수정하기 -->
+	<update id="UpdateCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		UPDATE COMPANY
+		SET
+			country = #{country}
+			, market = #{market}
+			, ticker = #{ticker}
+			, name = #{name}
+			, sector = #{sector}
+			, subSector = #{subSector}
+			, remark = #{remark}
+		WHERE 1=1
+			country = #{country}
+			, market = #{market}
+			, ticker = #{ticker}
+	</update>
+	
+	<!-- 기업 재무재표 수정하기 -->
+	<update id="UpdateFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		UPDATE FINANCIAL_STATEMENTS
+		SET
+			country = #{country}
+			, market = #{market}
+			, ticker = #{market}
+			, name = #{name}
+			, year = #{year}
+			, quarters = #{quarters}
+			, assets = #{quarters}
+			, debts = #{debts}
+			, capital = #{capital}
+			, revenue = #{revenue}
+			, cost = #{cost}
+			, tax = #{tax}
+			, netIncome = #{netIncome}
+			, per = #{per}
+			, roe = #{roe}
+		WHERE 1=1
+			country = #{country}
+			, market = #{market}
+			, ticker = #{market}
+			, name = #{name}
+			, year = #{year}
+			, quarters = #{quarters}
+			
+	</update>
+	
+	<!-- 기업 정보 삭제하기 -->
+	<delete id="DeleteCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		DELETE
+		FROM COMPANY
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+			
+	</delete>
+	
+	<!-- 기업 재무상태표 삭제하기 -->
+	<delete id="DeleteFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+		DELETE
+		FROM FINANCIAL_STATEMENTS
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+			<if test="year != null and year != ''">
+				and year = #{year}
+			</if>
+			<if test="quarters != null and quarters != ''">
+				and quarters = #{quarters}
+			</if>
+	</delete>
+	
+
+
+
+
+
+
+</mapper>
