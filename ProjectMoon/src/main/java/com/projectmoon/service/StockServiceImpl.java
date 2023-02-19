@@ -1,4 +1,4 @@
-package com.projectmoon.service.imple;
+package com.projectmoon.service;
 
 import java.util.List;
 
@@ -12,14 +12,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.projectmoon.domain.StockVO;
 import com.projectmoon.persistence.StockDao;
-import com.projectmoon.service.StockService;
 
 
 @Service
 public class StockServiceImpl implements StockService{
-
-	@Autowired
-	private StockService stockService;
 
 	@Autowired
 	private StockDao stockMapper;

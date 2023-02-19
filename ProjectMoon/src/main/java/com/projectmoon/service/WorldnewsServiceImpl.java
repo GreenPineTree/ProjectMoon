@@ -1,4 +1,4 @@
-package com.projectmoon.service.imple;
+package com.projectmoon.service;
 
 import java.util.List;
 
@@ -12,14 +12,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.projectmoon.domain.WorldnewsVO;
 import com.projectmoon.persistence.WorldnewsDao;
-import com.projectmoon.service.WorldnewsService;
 
 
 @Service
 public class WorldnewsServiceImpl implements WorldnewsService{
-
-	@Autowired
-	private WorldnewsService worldnewsService;
 
 	@Autowired
 	private WorldnewsDao worldnewsMapper;

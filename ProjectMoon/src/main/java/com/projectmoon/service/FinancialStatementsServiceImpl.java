@@ -1,4 +1,4 @@
-package com.projectmoon.service.imple;
+package com.projectmoon.service;
 
 import java.util.List;
 
@@ -12,14 +12,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.projectmoon.domain.FinancialStatementsVO;
 import com.projectmoon.persistence.FinancialStatementsDao;
-import com.projectmoon.service.FinancialStatementsService;
 
 
 @Service
 public class FinancialStatementsServiceImpl implements FinancialStatementsService{
-
-	@Autowired
-	private FinancialStatementsService financialstatementsService;
 
 	@Autowired
 	private FinancialStatementsDao financialstatementsMapper;

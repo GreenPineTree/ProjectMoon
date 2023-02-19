@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import com.projectmoon.domain.AccountBookVO;
+import com.projectmoon.domain.CommonVO;
 
 
 
@@ -35,6 +36,8 @@ public interface AccountBookDao {
 	// 기업 재무상태표 삭제하기
 	public int DeleteAssetsManagement(AccountBookVO accountBookVO);
 
+	// 테스트 모두가져오기
+	public List<CommonVO> selectAll();
 	
 	
 	

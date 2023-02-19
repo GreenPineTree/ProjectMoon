@@ -11,7 +11,7 @@ public class CommonVO implements Serializable{
 		
 	// cd_code - 공통코드
 	private String code; // 코드분류
-	private String maincategory; // 대분류
+	private String mainCategory; // 대분류
 	private String properties; // 코드설명
 	
 	
@@ -21,11 +21,11 @@ public class CommonVO implements Serializable{
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public String getMaincategory() {
-		return maincategory;
+	public String getmainCategory() {
+		return mainCategory;
 	}
-	public void setMaincategory(String maincategory) {
-		this.maincategory = maincategory;
+	public void setmainCategory(String mainCategory) {
+		this.mainCategory = mainCategory;
 	}
 	public String getProperties() {
 		return properties;
@@ -37,7 +37,7 @@ public class CommonVO implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "CommonVO [code=" + code + ", maincategory=" + maincategory + ", properties=" + properties + "]";
+		return "CommonVO [code=" + code + ", mainCategory=" + mainCategory + ", properties=" + properties + "]";
 	}
 	
 		
