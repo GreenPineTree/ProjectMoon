@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.projectmoon.domain.AccountBookVO;
 import com.projectmoon.domain.CommonVO;
 import com.projectmoon.persistence.AccountBookDao;
+import com.projectmoon.persistence.CdCommonDao;
 
 
 @Service
@@ -23,8 +24,7 @@ import com.projectmoon.persistence.AccountBookDao;
 public class AccountBookServiceImpl implements AccountBookService{
 
 	@Autowired
-	private AccountBookDao accountBookMapper;
-	
+	private AccountBookDao accountBookDao;
 	
 	@Override
 	public int InsertAccountBook(AccountBookVO accountBookVO) {
@@ -72,13 +72,6 @@ public class AccountBookServiceImpl implements AccountBookService{
 	public int DeleteAssetsManagement(AccountBookVO accountBookVO) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public List<CommonVO> selectAll() {
-		
-		System.out.println("디비 접속 확인 service ");
-		return accountBookMapper.selectAll();
 	}
 
 	

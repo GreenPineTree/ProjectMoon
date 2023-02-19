@@ -71,10 +71,4 @@ public class AccountBookDaoImple implements AccountBookDao {
 		return sqlSession.delete(NAMESPACE + ".DeleteAssetsManagement", accountBookVO);
 	}
 
-	@Override
-	public List<CommonVO> selectAll() {
-		System.out.println("디비 접속 확인 DAOImple ");
-		return sqlSession.selectList(NAMESPACE + ".selectAll");
-	}
-
 }

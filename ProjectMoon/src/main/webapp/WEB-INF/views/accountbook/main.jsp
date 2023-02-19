@@ -26,7 +26,7 @@ function login(){
 	<!-- <h1>부자되고 싶어요!!</h1> -->
 
 	<P>The time on the server is ${serverTime}.</P>
-	<a href="../accountBook/regist"><button type="button" id="accountBook">등록</button></a>
-	<a href="../accountBook/list"><button type="button" id="accountBook">가계부</button></a>
+	<a href="../accountBook/registView"><button type="button" id="accountBook">등록하기</button></a>
+	<a href="../accountBook/listView"><button type="button" id="accountBook">가계부</button></a>
 </body>
 </html>

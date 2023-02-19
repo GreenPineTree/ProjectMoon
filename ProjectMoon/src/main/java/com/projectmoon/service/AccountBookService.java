@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.projectmoon.domain.AccountBookVO;
-import com.projectmoon.domain.CommonVO;
 
 
 public interface AccountBookService {
@@ -34,8 +33,6 @@ public interface AccountBookService {
 		
 		// 자산 삭제하기
 		public int DeleteAssetsManagement(AccountBookVO accountBookVO);
-		
-		public List<CommonVO> selectAll();
 
 }
 

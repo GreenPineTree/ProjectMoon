@@ -4,17 +4,143 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <meta charset="UTF-8">
 
 <script type="text/javascript">
-<!-- 등록 함수 -->
-	function login() {
-		var frm = document.getElementById("loginfrm");
 
-		frm.action = "<c:url value='/main/main.action'/>";
-		frm.submit();
+$(document).ready(function(){
+	getCode();
 
-	}
+	$('#code').change(function(){
+		$('#mainCategory').val('');
+		$('#subCategory').val('');
+		$('#bank').val('');
+		var data = $(this).val();
+		var url = '/cdCommon/selectCode'
+		console.log(data);
+		$.ajax({
+			type : 'GET',
+			url : url,
+			contentType : 'application/json',
+			data : {'code' : data},
+			dataType : 'json',
+			success : function(resultData){
+				var list = '';
+				console.log(resultData);
+				console.log(resultData.length);
+				list += '<option value="" selected>선택';
+				if(data != 'ACCOUNT_TRANSFER'){
+					for(var i = 0; i < resultData.length; i++){
+						var item = resultData[i];
+						list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+					}
+				} else {
+					list += '<option value="BANK">이체'; 
+				}
+				$('#mainCategory').html(list);
+			}
+		})
+		
+	})
+	
+	$('#mainCategory').change(function(){
+		$('#subCategory').val('');
+		$('#bank').val('');
+		var data = $(this).val();
+		var url = '/cdCommon/selectCode'
+		console.log(data);
+		$.ajax({
+			type : 'GET',
+			url : url,
+			contentType : 'application/json',
+			data : {'code' : data},
+			dataType : 'json',
+			success : function(resultData){
+				var list = '';
+				console.log(resultData);
+				console.log(resultData.length);
+				list += '<option value="" selected>선택';
+				for(var i = 0; i < resultData.length; i++){
+					var item = resultData[i];
+					list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+				}
+				$('#subCategory').html(list);
+			}
+		})
+		
+	})
+	
+	$('#subCategory').change(function(){
+		$('#bank').val('');
+		var data = 'BANK';
+		var url = '/cdCommon/selectCode'
+		console.log(data);
+		$.ajax({
+			type : 'GET',
+			url : url,
+			contentType : 'application/json',
+			data : {'code' : data},
+			dataType : 'json',
+			success : function(resultData){
+				var list = '';
+				console.log(resultData);
+				console.log(resultData.length);
+				list += '<option value="" selected>선택';
+				for(var i = 0; i < resultData.length; i++){
+					var item = resultData[i];
+					list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+				}
+				$('#bank').html(list);
+			}
+		})
+		
+	})
+	
+	
+})
+
+function getCode(){
+	var url = '/cdCommon/selectCode';
+	var data = 'AB';
+	$.ajax({
+		type : 'GET',
+		url : url,
+		contentType : 'application/json',
+		data : {'code' : data},
+		dataType : 'json',
+		success : function(resultData){
+			var list = '';
+			console.log(resultData);
+			console.log(resultData.length);
+			list += '<option value="" selected>선택';
+			for(var i = 0; i < resultData.length; i++){
+				var item = resultData[i];
+				list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+			}
+			$('#code').html(list);
+		}
+	})
+}
+
+function regist(){
+	var yymmdd = $('#date').val();
+	yymmdd.replace("-", "");
+	var year = yymmdd.substring(0, 4);
+	var month = yymmdd.substring(4, 6);
+	var date = yymmdd.substring(6);
+	console.log(yymmdd);
+	document.$('#year').value = year;
+	document.$('#month').value = month;
+	document.$('#division').value = $('#code').val();
+	document.$('#divisionDetail').value = $('#mainCategory').val();
+	document.$('#divisionSubDetail').value = $('#subCategory').val();
+	document.$('#date').value = date;
+	document.getElementById("registfrm").action;
+	
+}
+	
+
 </script>
 
 
@@ -22,189 +148,51 @@
 </head>
 <body>
 	<div>
-		<form id="registfrm" name="registfrm" method="post">
+		<form action="../accountBook/regist" id="registfrm" name="registfrm" method="POST">
+			<input type="hidden" name="year" value="">
+			<input type="hidden" name="month" value="">
+			<input type="hidden" name="division" value="">
+			<input type="hidden" name="divisionDetail" value="">
+			<input type="hidden" name="divisionSubDetail" value="">
+			<!-- <input type="hidden" name="amount" value=""> -->
+			<input type="hidden" name="detail" value="">
+			<!-- <input type="hidden" name="date" value=""> -->
+			<input type="hidden" name="bank" value="">
+			
 			<!-- 구분및 은행 선택 -->
 			<div id="division">
 				<!-- 수익 비용 이체 구분 -->
-				<span>거래</span>
-				<select id="ab" name="ab">
-					<option value="">선택
-					<c:forEach var="list" items="${ab }">
-						<option value="${list.mainCategory }">${list.properties }
-					</c:forEach>
-					<!-- 
-					<option value="accountRevenue">수익
-					<option value="accountCost">비용
-					<option value="accountTransfer">이체
-					 -->
+				<span>거래 종류</span>
+				<select id="code" name="code">
+				
 				</select>
 
-				<!-- 첫번째 선택 값에 따라 -->
-				<c:choose>
-					<c:when test="${ab == accountRevenue }">
-					<!-- 구분의 값이 수익이라면 -->
-						<p>수익</p>
-						<select id="revenue">
-							<option value="">선택
-							<option value="revenueRoutine">정기수익
-							<option value="revenueIrregular">비정기수익
-						</select>
-					</c:when>
-					<c:when test="${ab == accountCost}">
-					<!-- 구분의 값이 비용이라면 -->
-						<p>비용</p>
-						<select id="cost">
-							<option value="">선택
-							<option value="costRoutine">정기비용
-							<option value="costIrregular">비정기비용
-						</select>
-					</c:when>
-					<c:when test="${ab == accountTransfer}">
-					<!-- 구분의 값이 이체라면 -->
-						<p>이체 From</p>
-						<select id="transfer">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-					<c:otherwise>
-
-					</c:otherwise>
-				</c:choose>
-
-				<!-- 두 번째 선택 값에 따라 -->
-				<c:choose>
-					<c:when test="${accountRevenue == revenueRoutine}">
-					<!-- 정기수익이라면 -->
-						<p>정기수익</p>
-						<select id="routine">
-							<option value="">선택
-							<option value="01">이자
-							<option value="02">배당
-							<option value="03">사업
-							<option value="04">근로
-							<option value="05">연금
-							<option value="06">기타
-						</select>
-					</c:when>
-					<c:when test="${accountRevenue == revenueIrregular}">
-					<!-- 비정기수익이라면 -->
-						<p>비정기수익</p>
-						<select id="irregular">
-							<option value="">선택
-							<option value="01">부모님
-							<option value="02">세금
-							<option value="03">주식처분
-							<option value="04">기타
-						</select>
-					</c:when>
-					<c:when test="${accountCost == costRoutine}">
-					<!-- 정기비용이라면 -->
-						<p>정기비용</p>
-						<select id="routine">
-							<option value="">선택
-							<option value="01">보험
-							<option value="02">주거
-							<option value="03">교통
-							<option value="04">통신
-							<option value="05">이자
-							<option value="06">식비
-							<option value="07">데이트
-							<option value="08">세금
-							<option value="09">기타
-						</select>
-					</c:when>
-					<c:when test="${accountCost == costIrregular}">
-					<!-- 비정기비용이라면 -->
-						<p>비정기비용</p>
-						<select id="irregular">
-							<option value="">선택
-							<option value="01">유흥
-							<option value="02">자기계발
-							<option value="03">의료
-							<option value="04">세금
-							<option value="05">기타
-						</select>
-					</c:when>
-					<c:when test="${transfer == transfer}">
-					<!-- 구분의 값이 이체라면 -->
-						<p>이체 To</p>
-						<select id="transfer">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-					<c:otherwise>
-					</c:otherwise>
-				</c:choose>
+				<select id="mainCategory" name="mainCategory">
+					
+				</select>
 				
-				<!-- 구분의 값이 수익 및 비용이라면 -->
-				<c:choose>
-					<c:when test="${accountRevenue == revenueRoutine}">
-					<!-- 정기수익이라면 -->
-						<p>거래된 은행</p>
-						<select id="">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-					<c:when test="${accountRevenue == revenueIrregular}">
-					<!-- 비정기수익이라면 -->
-						<p>거래된 은행</p>
-						<select id="irregular">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-					<c:when test="${accountCost == costRoutine}">
-					<!-- 정기비용이라면 -->
-						<p>거래된 은행</p>
-						<select id="routine">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-					<c:when test="${accountCost == costIrregular}">
-					<!-- 비정기비용이라면 -->
-						<p>거래된 은행</p>
-						<select id="irregular">
-							<option value="">선택
-							<option value="01">농협증권
-							<option value="02">국민은행
-							<option value="03">우리은행
-							<option value="04">카카오뱅크
-						</select>
-					</c:when>
-				</c:choose>
+				<select id="subCategory" name="subCategory">
+				
+				</select>
+				
+				<select id="bank" name="bank">
+				
+				</select>
+
 			</div>
-			<div id="datepicker">
-				<p>날짜</p>
-				<p>20230203</p>
+			<div>
+				<span>날짜</span>
+				<input type="date" id="datepicker" name="datepicker" >
 			</div>
-			<div id="account">
-				<p>금액</p>
-				<p>2,300,000</p>
+			<div>
+				<span>금액</span>
+				<input type="number" id="amount" name="amount">
 			</div>
 			<div id="division">
-				<p>사용처</p>
-				<p>점심식대</p>
+				<span>사용처</span>
+				<input type="text" id="detail" name="detail">
 			</div>
-			<button id="add" name="add" onclick="regist();">추가</button>
+			<button id="add" name="add" onclick="add();">추가</button>
 			<button id="regist" name="regist" onclick="regist();">등록</button>
 		</form>
 	</div>
