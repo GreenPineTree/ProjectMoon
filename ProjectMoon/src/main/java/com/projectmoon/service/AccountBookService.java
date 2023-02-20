@@ -33,6 +33,12 @@ public interface AccountBookService {
 		
 		// 자산 삭제하기
 		public int DeleteAssetsManagement(AccountBookVO accountBookVO);
+		
+		// 해당 연도 가져오기
+		public List<AccountBookVO>getYear();
+		
+		// 해당 월 가져오기
+		public List<AccountBookVO>getMonth(AccountBookVO accountBookVO);
 
 }
 

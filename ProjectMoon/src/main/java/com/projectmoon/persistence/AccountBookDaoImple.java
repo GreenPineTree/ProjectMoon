@@ -25,7 +25,7 @@ public class AccountBookDaoImple implements AccountBookDao {
 	
 	@Override
 	public int InsertAccountBook(AccountBookVO accountBookVO) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.insert(NAMESPACE + ".InsertAccountBook", accountBookVO);
 	}
 
@@ -69,6 +69,18 @@ public class AccountBookDaoImple implements AccountBookDao {
 	public int DeleteAssetsManagement(AccountBookVO accountBookVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete(NAMESPACE + ".DeleteAssetsManagement", accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> getYear() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".GetYear");
+	}
+
+	@Override
+	public List<AccountBookVO> getMonth(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".GetMonth", accountBookVO);
 	}
 
 }
