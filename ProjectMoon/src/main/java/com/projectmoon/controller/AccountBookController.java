@@ -26,7 +26,6 @@ public class AccountBookController {
 	@RequestMapping(value="/mainView")
 	public String accountBookMain() {
 		String result = "/accountbook/main";
-		System.out.println("어서오세요 가계부입니다.");
 		
 		return result;
 	}
@@ -34,17 +33,16 @@ public class AccountBookController {
 	@RequestMapping(value="/registView")
 	public String accountBookRegistView() {
 		String result = "/accountbook/regist";
-		System.out.println("가계부 등록화면입니다.");
 		
 		
 		return result;
 	}
 
+	@ResponseBody
 	@RequestMapping(value="/regist")
-	public String accountBookRegist(AccountBookVO accountBookVO) {
-		String result = "/accountbook/main";
-		System.out.println("가계부 등록합니다.");
-		System.out.println(accountBookVO.toString());
+	public String accountBookRegist(@RequestBody AccountBookVO accountBookVO) {
+		System.out.println("데이터 확인 : " + accountBookVO);
+		String result = "SUCCESS";
 		String yymmdd = accountBookVO.getDate();
 		yymmdd = yymmdd.replace("-", "");
 		String year = yymmdd.substring(0, 4);
@@ -54,20 +52,51 @@ public class AccountBookController {
 		accountBookVO.setYear(year);
 		accountBookVO.setMonth(month);
 		accountBookVO.setDate(date);
-		System.out.println(accountBookVO.toString());
-		int registResult = accountBookService.InsertAccountBook(accountBookVO);
+		int registResult = 0;
+		// 이체일 경국 각각 수익 비용처리
+		if("ACCOUNT_TRANSFER".equals(accountBookVO.getDivision())) {
+			String bankFrom = accountBookVO.getDivisionSubDetail(); // 보내는 통장
+			String bankTo = accountBookVO.getBank(); // 받는 통장
+			int charge = Integer.parseInt(accountBookVO.getDetail());
+			// TO(비정기_수익_기타)
+			accountBookVO.setDivision("ACCOUNT_REVENUE");
+			accountBookVO.setDivisionDetail("REVENUE_IRREGULAR");
+			accountBookVO.setDivisionSubDetail("04");
+			accountBookVO.setDetail("이체");
+			registResult = accountBookService.InsertAccountBook(accountBookVO);
+			// FROM(비정기_비용_기타) 원금 + 수수료(있다면)
+			accountBookVO.setDivision("ACCOUNT_COST");
+			accountBookVO.setDivisionDetail("COST_IRREGULAR");
+			accountBookVO.setDivisionSubDetail("05");
+			accountBookVO.setBank(bankFrom);
+			accountBookVO.setDetail("이체");
+			registResult = accountBookService.InsertAccountBook(accountBookVO);
+			
+			if(charge > 0) {
+				accountBookVO.setDivision("ACCOUNT_COST");
+				accountBookVO.setDivisionDetail("COST_IRREGULAR");
+				accountBookVO.setDivisionSubDetail("05");
+				accountBookVO.setBank(bankFrom);
+				accountBookVO.setAmount(String.valueOf(charge));
+				accountBookVO.setDetail("이체수수료");
+				registResult = accountBookService.InsertAccountBook(accountBookVO);
+			}
+			
+		} else {
+			registResult = accountBookService.InsertAccountBook(accountBookVO);
+		}
 		if(registResult != 1) {
 			System.out.println("등록실패");
-			result = "/accountbook/regist";
+			result = "FAIL";
 		}
 		
 		return result;
 	}
 	
-	@RequestMapping(value="/listView")
-	public String listView() {
-		String result = "/accountbook/list";
-		System.out.println("가계부 목록입니다.");
+	
+	@RequestMapping(value="/assetmanageView")
+	public String assetmanageView() {
+		String result = "/accountbook/assetmanage";
 		
 		return result;
 	}
@@ -80,24 +109,79 @@ public class AccountBookController {
 		return list;
 	}
 	
-	@RequestMapping(value="/getMonth")
 	@ResponseBody
-	public List<AccountBookVO> getMonth(@RequestParam String year){
-		
-		AccountBookVO accountBookVO = new AccountBookVO();
-		accountBookVO.setYear(year);
+	@RequestMapping(value="/getMonth")
+	public List<AccountBookVO> getMonth(@RequestBody AccountBookVO accountBookVO){
 		List<AccountBookVO> list = accountBookService.getMonth(accountBookVO);
 		return list;
 	}
 	
-	@RequestMapping(value="/SelectAccountBookList")
 	@ResponseBody
-	public List<AccountBookVO> SelectAccountBookList(@RequestParam String year, @RequestParam String month){
+	@RequestMapping(value="/SelectAccountBookList")
+	public List<AccountBookVO> SelectAccountBookList(@RequestBody AccountBookVO accountBookVO){
+		System.out.println("왜요 : " + accountBookVO);
+		List<AccountBookVO> list = accountBookService.SelectAccountBookList(accountBookVO);
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getBalance")
+	public List<AccountBookVO> getBalance(@RequestBody AccountBookVO accountBookVO){
+		String month = accountBookVO.getMonth();
+		String year = accountBookVO.getYear();
+		int intmonth = Integer.parseInt(month);
+		int intyear = Integer.parseInt(year);
+		intmonth = intmonth -1 ;
+		if(intmonth == 0) {
+			intyear = intyear -1;
+			intmonth = 12;
+		}
+		year = String.valueOf(intyear);
+		if(intmonth < 10) {
+			month = "0" + String.valueOf(intmonth);
+		} else {
+			month = String.valueOf(intmonth);
+		}
 		
-		AccountBookVO accountBookVO = new AccountBookVO();
 		accountBookVO.setYear(year);
 		accountBookVO.setMonth(month);
-		List<AccountBookVO> list = accountBookService.SelectAccountBookList(accountBookVO);
+		List<AccountBookVO> list = accountBookService.SelectAssetsManagement(accountBookVO);
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getSettle")
+	public List<AccountBookVO>getSettle(@RequestBody AccountBookVO accountBookVO){
+		
+		
+		List<AccountBookVO> list = accountBookService.SelectAssetsManagement(accountBookVO);
+		if(list.size() < 1) {
+			list = accountBookService.SelectSettle(accountBookVO);
+		}
+		
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/setNewSettle")
+	public List<AccountBookVO>setNewSettle(@RequestBody AccountBookVO accountBookVO){
+		
+		
+		List<AccountBookVO> list = accountBookService.SelectSettle(accountBookVO);
+		
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getChart")
+	public List<AccountBookVO>getChart(@RequestBody AccountBookVO accountBookVO){
+		
+		List<AccountBookVO> list = accountBookService.getChart(accountBookVO);
+		//월별로 데이터 나열 + 목록 통일화 필요
+		
+		
+		System.out.println("리스트 확인 : " + list);
+		
 		return list;
 	}
 	

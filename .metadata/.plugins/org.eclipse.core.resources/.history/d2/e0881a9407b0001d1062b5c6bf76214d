@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script type="text/javascript">
+<!-- 로그인 함수 -->
+function login(){
+	var frm = document.getElementById("loginfrm");
+	
+	frm.action="<c:url value='/main/main.action'/>";
+	frm.submit();
+	
+}
+
+
+</script>
+
+
+<title>가계부</title>
+</head>
+<body>
+<div>
+		<form id="registfrm" name="registfrm" method="post">
+			<!-- 구분및 은행 선택 -->
+			<div id="division">
+				<!-- 수익 비용 이체 구분 -->
+				<p>거래</p>
+				<select id="ab" name="ab">
+					<option value="">선택
+					<option value="accountRevenue">수익
+					<option value="accountCost">비용
+					<option value="accountTransfer">이체
+				</select>
+
+				<!-- 첫번째 선택 값에 따라 -->
+				<c:choose>
+					<c:when test="${ab == accountRevenue }">
+						<p>수익</p>
+						<select id="revenue">
+							<option value="">선택
+							<option value="revenueRoutine">정기수익
+							<option value="revenueIrregular">비정기수익
+						</select>
+					</c:when>
+					
+					<c:otherwise>
+
+					</c:otherwise>
+				</c:choose>
+
+			</div>
+		</form>
+	</div>
+	
+	</body>
+</html>

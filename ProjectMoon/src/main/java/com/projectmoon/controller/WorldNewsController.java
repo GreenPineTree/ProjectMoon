@@ -9,7 +9,7 @@ public class WorldNewsController {
 	
 	
 	
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/mainView")
 	public String worldNewsMain() {
 		System.out.println("어서오세요 뉴스 화면입니다.");
 		

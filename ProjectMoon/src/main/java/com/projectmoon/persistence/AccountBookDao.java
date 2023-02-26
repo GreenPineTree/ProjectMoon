@@ -42,8 +42,18 @@ public interface AccountBookDao {
 	// 해당 월 가져오기
 	public List<AccountBookVO>getMonth(AccountBookVO accountBookVO);
 	
+	// 월말정산 금액 게산하기
+	public AccountBookVO SelectSumAssets(AccountBookVO accountBookVO);
 	
+	// 전월 잔액 가져오기
+	public AccountBookVO SelectAssetsBalance(AccountBookVO accountBookVO);
 	
+	// 차트그리기
+	// 구분 가져오기
+	public List<AccountBookVO>getDivisionDetail(AccountBookVO accountBookVO);
+	
+	// 세부 합산 및 이름 가져오기
+	public List<AccountBookVO>getDivsionSubDetailSum(AccountBookVO accountBookVO);
 	
 	
 	

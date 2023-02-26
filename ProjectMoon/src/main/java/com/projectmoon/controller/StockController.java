@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StockController {
 	
 	
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/mainView")
 	public String stockMain() {
 		System.out.println("어서오세요 주식화면입니다.");
 		

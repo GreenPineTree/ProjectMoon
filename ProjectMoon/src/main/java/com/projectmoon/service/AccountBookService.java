@@ -39,6 +39,18 @@ public interface AccountBookService {
 		
 		// 해당 월 가져오기
 		public List<AccountBookVO>getMonth(AccountBookVO accountBookVO);
+		
 
+		// 정산 값 가져오기
+		public List<AccountBookVO>SelectSettle(AccountBookVO accountBookVO);
+		
+		// 차트그리기
+		// 구분 가져오기
+		public List<AccountBookVO>getDivisionDetail(AccountBookVO accountBookVO);
+		
+		// 세부 합산 및 이름 가져오기
+		public List<AccountBookVO>getDivsionSubDetailSum(AccountBookVO accountBookVO);
+		
+		public List<AccountBookVO>getChart(AccountBookVO accountBookVO);
 }
 

@@ -48,8 +48,12 @@
 			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANK
 		FROM ACCOUNT_BOOK a
 		WHERE 1=1
-			and year = #{year}
-			and month = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+			<if test="bank != null and bank != ''">
+				AND BANK = #{bank}
+			</if>
+		ORDER BY DATE
 			
 	</select> 
 
@@ -67,8 +71,8 @@
 			, DATE = #{date}
 			, BANK = #{bank}
 		WHERE 1=1
-			and YEAR = #{year}
-			and MONTH = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
 			
 	</update> 
 	
@@ -77,8 +81,8 @@
 		DELETE 
 		FROM ACCOUNT_BOOK
 		WHERE 1=1
-			and year = #{year}
-			and month = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
 			
 	</delete>
 	
@@ -88,14 +92,12 @@
 		INSERT INTO ASSETS_MANAGEMENT (
 			YEAR
 			, MONTH
-			, DIVISION
 			, AMOUNT
 			, BANK
 		)
 		VALUES (
 			#{year}
 			, #{month}
-			, #{division}
 			, #{amount}
 			, #{bank}
 		)
@@ -106,13 +108,15 @@
 		SELECT
 			YEAR
 			, MONTH
-			, DIVISION
 			, AMOUNT
-			, BANK
-		FROM ACCOUNT_BOOK
+			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANK
+		FROM ASSETS_MANAGEMENT a
 		WHERE 1=1
-			and YEAR = #{year}
-			and MONTH = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+			<if test="bank != null and bank != ''">
+				AND BANK = #{bank}
+			</if>
 			
 	</select>
 	
@@ -122,12 +126,12 @@
 		SET
 			YEAR = #{year}
 			, MONTH = #{month}
-			, DIVISION = #{division}
 			, AMOUNT = #{amount}
 			, BANK = #{bank}
 		WHERE 1=1
-			and YEAR = #{year}
-			and MONTH = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+			AND BANK = #{bank}
 			
 	</update> 
 	
@@ -136,8 +140,8 @@
 		DELETE 
 		FROM ASSETS_MANAGEMENT
 		WHERE 1=1
-			and YEAR = #{year}
-			and MONTH = #{month}
+			AND YEAR = #{year}
+			AND MONTH = #{month}
 			
 	</delete>
 
@@ -162,6 +166,71 @@
 			AND YEAR = #{year}
 		GROUP BY
 			MONTH
+	</select>
+	
+	<!-- 월말정산 금액 가져오기 -->
+	<select id="SelectSumAssets" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			SUM(AMOUNT) AS amount
+		FROM
+			ACCOUNT_BOOK
+		WHERE 1=1
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+			<if test="bank != null and bank != ''">
+				AND BANK = #{bank}
+			</if>
+			<if test="division != null and division != ''">
+				AND DIVISION = #{division}
+			</if>
+			<if test="divisionSubDetail != null and divisionSubDetail != ''">
+				AND DIVISION_SUB_DETAIL = #{divisionSubDetail}
+			</if>
+			 
+	</select>
+	
+	<!-- 월말정산 자산 가져오기 -->
+	<select id="SelectAssetsBalance" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			YEAR
+			, MONTH
+			, AMOUNT
+			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANK
+		FROM ASSETS_MANAGEMENT a
+		WHERE 1=1
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+			AND BANK = #{bank}
+			
+	</select>
+	
+	<!-- 가계부 차트 -->
+	<!-- 1. GetYear, GetMonth를 통해 기록한 연/월을 구하고 이를 통해 DIVISION_DETAIL을 구한다 -->
+	<select id="getDivisionDetail" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT 
+			DIVISION_DETAIL
+		FROM 
+			ACCOUNT_BOOK
+		WHERE 1=1
+			AND YEAR = #{year}
+			AND MONTH = #{month}
+		GROUP BY
+			DIVISION_DETAIL 
+	</select>
+	
+	<!-- 2. getDivisionDetail을 통해 구한 구분을통해 세부항목의 합산과 이름을 구한다 -->
+	<select id="getDivsionSubDetailSum" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+		SUM(AMOUNT) AS amount
+		, (SELECT PROPERTIES FROM CD_CODE WHERE code = #{divisionDetail} AND MAIN_CATEGORY = a.DIVISION_SUB_DETAIL) DIVISION_SUB_DETAIL
+	FROM 
+		ACCOUNT_BOOK a
+	WHERE 1=1
+		AND YEAR = #{year}
+		AND MONTH = #{month}
+		AND DIVISION_DETAIL = #{divisionDetail}
+	GROUP BY 
+		DIVISION_SUB_DETAIL 
 	</select>
 	
 </mapper>

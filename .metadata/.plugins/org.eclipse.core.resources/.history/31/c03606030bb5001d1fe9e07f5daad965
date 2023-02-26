@@ -1,0 +1,220 @@
+package com.projectmoon.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.projectmoon.domain.AccountBookVO;
+import com.projectmoon.domain.CommonVO;
+import com.projectmoon.persistence.AccountBookDao;
+import com.projectmoon.persistence.CdCommonDao;
+
+
+@Service
+//@Component
+//* 서비스 계층(Service/Business layer)
+//- 표현 계층(Presentation layer)과 영속 계층(Persistence layer) 사이를 연결하여
+//	  두 계층이 직접적으로 통신하지 않도록 하는 역할
+//- 트랜잭션(transaction) 관리
+//- DB와 상과없이 데이터를 처리 가능
+public class AccountBookServiceImpl implements AccountBookService{
+
+	@Autowired
+	private AccountBookDao accountBookDao;
+	
+	@Autowired
+	private CdCommonDao cdCommonDao;
+	
+	@Override
+	public int InsertAccountBook(AccountBookVO accountBookVO) {
+
+		return accountBookDao.InsertAccountBook(accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> SelectAccountBookList(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.SelectAccountBookList(accountBookVO);
+	}
+
+	@Override
+	public int UpdateAccountBook(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.UpdateAccountBook(accountBookVO);
+	}
+
+	@Override
+	public int DeleteAccountBook(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.DeleteAccountBook(accountBookVO);
+	}
+	
+	@Override
+	public int InsertAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.InsertAssetsManagement(accountBookVO);
+	}
+	
+	@Override
+	public List<AccountBookVO> SelectAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.SelectAssetsManagement(accountBookVO);
+	}
+	
+	@Override
+	public int UpdateAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.UpdateAssetsManagement(accountBookVO);
+	}
+
+	@Override
+	public int DeleteAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.DeleteAssetsManagement(accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> getYear() {
+		// TODO Auto-generated method stub
+		return accountBookDao.getYear();
+	}
+
+	@Override
+	public List<AccountBookVO> getMonth(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return accountBookDao.getMonth(accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> SelectSettle(AccountBookVO accountBookVO) {
+		// 돌려줄 list 선언
+		List<AccountBookVO> list = new ArrayList<AccountBookVO>();
+		
+		String month = accountBookVO.getMonth();
+		String year = accountBookVO.getYear();
+		String calYear = year;
+		String calMonth = month;
+		System.out.println("받은 데이터 상태 : " + accountBookVO);
+		// 전월 구하기
+		int intmonth = Integer.parseInt(month);
+		int intyear = Integer.parseInt(year);
+		intmonth = intmonth -1 ;
+		if(intmonth == 0) {
+			intyear = intyear -1;
+			intmonth = 12;
+		}
+		year = String.valueOf(intyear);
+		if(intmonth < 10) {
+			month = "0" + String.valueOf(intmonth);
+		} else {
+			month = String.valueOf(intmonth);
+		}
+		
+		AccountBookVO prevVO = new AccountBookVO();
+		prevVO.setMonth(month);
+		prevVO.setYear(year);
+		
+		// 1. 은행 목록 가져오기
+		CommonVO commonVO = new CommonVO();
+		commonVO.setCode("BANK");
+		List<CommonVO> bankList = cdCommonDao.selectCode(commonVO);
+		
+		// 2. 전월잔액
+		for(int i = 0; i < bankList.size(); i++) {
+			commonVO = bankList.get(i);
+			String bank = commonVO.getMainCategory();
+			prevVO.setBank(bank);
+			AccountBookVO balanceVO = accountBookDao.SelectAssetsBalance(prevVO);
+			System.out.println("잔액 상태 : " + balanceVO);
+			if(balanceVO != null ) {
+				
+				int balance = Integer.parseInt(balanceVO.getAmount());
+				
+				// 3. 당월 수익 / 비용 & 이체 		
+				// 3-1 수익 vo
+				AccountBookVO revenueVO = new AccountBookVO();
+				revenueVO.setBank(bank);
+				revenueVO.setYear(calYear);
+				revenueVO.setMonth(calMonth);
+				revenueVO.setDivision("ACCOUNT_REVENUE");
+				revenueVO = accountBookDao.SelectSumAssets(revenueVO);
+				int revenue = 0;
+				if(revenueVO != null) {
+					revenue = Integer.parseInt(revenueVO.getAmount());
+				}
+				
+				
+				// 3-2 비용 vo
+				AccountBookVO costVO = new AccountBookVO();
+				costVO.setBank(bank);
+				costVO.setYear(calYear);
+				costVO.setMonth(calMonth);
+				costVO.setDivision("ACCOUNT_COST");
+				costVO = accountBookDao.SelectSumAssets(costVO);
+				int cost = 0;
+				if(costVO != null) {
+					cost = Integer.parseInt(costVO.getAmount());
+				}
+				
+				// 3-3 이체from vo(비용처럼 마이너스)
+				AccountBookVO transferFromVO = new AccountBookVO();
+				transferFromVO.setYear(calYear);
+				transferFromVO.setMonth(calMonth);
+				transferFromVO.setDivision("ACCOUNT_TRANSFER");
+				transferFromVO.setDivisionSubDetail(bank);
+				transferFromVO = accountBookDao.SelectSumAssets(transferFromVO);
+				int transferFrom = 0;
+				if(transferFromVO != null) {
+					transferFrom = Integer.parseInt(transferFromVO.getAmount());
+				}
+				
+				// 3-4 이체to vo(수익처럼 플러스)
+				AccountBookVO transferToVO = new AccountBookVO();
+				transferToVO.setYear(calYear);
+				transferToVO.setMonth(calMonth);
+				transferToVO.setDivision("ACCOUNT_TRANSFER");
+				transferToVO.setBank(bank);
+				transferToVO = accountBookDao.SelectSumAssets(transferToVO);
+				int transferTo = 0;
+				if(transferToVO != null) {
+					transferTo = Integer.parseInt(transferToVO.getAmount());
+				}
+				
+				// 4. 잔액 계산
+				String amount = String.valueOf(balance + revenue + transferTo - cost - transferFrom );
+				System.out.println("잔액 : " + balance);
+				System.out.println("수익 : " + revenue);
+				System.out.println("받는이체 : " + transferTo);
+				System.out.println("비용 : " + cost);
+				System.out.println("보내는이체 : " + transferFrom);
+				// 5. accountBookVO에 담아 list로 추가
+				accountBookVO.setBank(bank);
+				accountBookVO.setAmount(amount);
+				list.add(accountBookVO);
+				
+				// 6. 해당 연월의 정산이 있는지 확인 후, 없다면 insert, 있다면 update를 진행
+				AccountBookVO confirmVO = accountBookDao.SelectAssetsBalance(accountBookVO);
+				if(confirmVO == null) {
+					accountBookDao.InsertAssetsManagement(accountBookVO);
+				} else {
+					accountBookDao.UpdateAssetsManagement(accountBookVO);
+				}
+			} 
+		}
+		
+		
+		return list;
+	}
+
+
+	
+
+
+	
+	
+}

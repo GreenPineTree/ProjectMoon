@@ -83,4 +83,29 @@ public class AccountBookDaoImple implements AccountBookDao {
 		return sqlSession.selectList(NAMESPACE + ".GetMonth", accountBookVO);
 	}
 
+	@Override
+	public AccountBookVO SelectSumAssets(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE + ".SelectSumAssets", accountBookVO);
+	}
+
+	@Override
+	public AccountBookVO SelectAssetsBalance(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE + ".SelectAssetsBalance", accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> getDivisionDetail(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".getDivisionDetail", accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> getDivsionSubDetailSum(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".getDivsionSubDetailSum", accountBookVO);
+	}
+
+
 }

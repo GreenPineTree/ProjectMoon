@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FinancialStatementsController {
 
 	
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/mainView")
 	public String financialStatementsMain() {
 		System.out.println("어서오세요 경제지표화면입니다.");
 		

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.projectmoon.service.AccountBookService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.AccountBookDao"/>
-<fullyQualifiedTypeName name="com.projectmoon.domain.AccountBookVO"/>
 <fullyQualifiedTypeName name="com.projectmoon.service.FinancialStatementsService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.FinancialStatementsDao"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.FinancialStatementsVO"/>
@@ -12,11 +10,32 @@
 <fullyQualifiedTypeName name="com.projectmoon.service.WorldnewsService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.WorldnewsDao"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.WorldnewsVO"/>
-<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
 <fullyQualifiedTypeName name="org.slf4j.Logger"/>
 <fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.AccountBookDaoImple"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Controller"/>
+<fullyQualifiedTypeName name="org.mybatis.spring.annotation.MapperScan"/>
+<fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSession"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="org.springframework.ui.Model"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+<fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.CdCommonService"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.AccountBookService"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.CdCommonDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.CommonVO"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.AccountBookVO"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
 </qualifiedTypeNameHistroy>

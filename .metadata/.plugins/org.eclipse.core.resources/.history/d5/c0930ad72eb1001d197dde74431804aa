@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectmoon.persistence.AccountBookMapper">
+	
+	<!-- 수입/지출/이체 구분에 따른 2차 구분 불러오기 -->
+	<select id="select">
+	
+	</select>
+	
+	<!-- 가계부 정보 입력 -->
+	<insert id="InsertAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+		INSERT INTO ACCOUNT_BOOK (
+			YEAR
+			, MONTH
+			, DIVISION
+			, DIVISION_DETAIL
+			, DIVISION_SUB_DETAIL
+			, AMOUNT
+			, DETAIL
+			, DATE
+			, BANK
+		)
+		VALUES (
+			#{year}
+			, #{month}
+			, #{division}
+			, #{divisionDetail}
+			, #{divisionSubDetail}
+			, #{amount}
+			, #{detail}
+			, #{date}
+			, #{bank}
+		)
+		
+	</insert>
+	
+	<!-- 가계부 목록 가져오기 -->
+	<select id="SelectAccountBookList" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			YEAR
+			, MONTH
+			, DIVISION
+			, DIVISION_DETAIL
+			, (SELECT PROPERTIES FROM CD_CODE WHERE code = a.DIVISION_DETAIL AND MAIN_CATEGORY = a.BANK) DIVISION_SUB_DETAIL
+			, AMOUNT
+			, DETAIL
+			, DATE
+			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANK
+		FROM ACCOUNT_BOOK a
+		WHERE 1=1
+			and year = #{year}
+			and month = #{month}
+			
+	</select> 
+
+	<!-- 가계부 수정하기 -->
+	<update id="UpdateAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+		UPDATE ACCOUNT_BOOK
+		SET
+			YEAR = #{year}
+			, MONTH = #{month}
+			, DIVISION = #{division}
+			, DIVISION_DETAIL = #{divisionDetail}
+			, DIVISION_SUB_DETAIL = #{divisionSubDetail}
+			, AMOUNT = #{amount}
+			, DETAIL = #{detail}
+			, DATE = #{date}
+			, BANK = #{bank}
+		WHERE 1=1
+			and YEAR = #{year}
+			and MONTH = #{month}
+			
+	</update> 
+	
+	<!-- 가계부 삭제하기 -->
+	<delete id="DeleteAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+		DELETE 
+		FROM ACCOUNT_BOOK
+		WHERE 1=1
+			and year = #{year}
+			and month = #{month}
+			
+	</delete>
+	
+	
+	<!-- 자산 정보 입력 -->
+	<insert id="InsertAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+		INSERT INTO ASSETS_MANAGEMENT (
+			YEAR
+			, MONTH
+			, DIVISION
+			, AMOUNT
+			, BANK
+		)
+		VALUES (
+			#{year}
+			, #{month}
+			, #{division}
+			, #{amount}
+			, #{bank}
+		)
+	</insert> 
+	
+	<!-- 자산 목록 가져오기 -->
+	<select id="SelectAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			YEAR
+			, MONTH
+			, DIVISION
+			, AMOUNT
+			, BANK
+		FROM ACCOUNT_BOOK
+		WHERE 1=1
+			and YEAR = #{year}
+			and MONTH = #{month}
+			
+	</select>
+	
+	<!-- 자산 수정하기 -->
+	<update id="UpdateAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+		UPDATE ASSETS_MANAGEMENT
+		SET
+			YEAR = #{year}
+			, MONTH = #{month}
+			, DIVISION = #{division}
+			, AMOUNT = #{amount}
+			, BANK = #{bank}
+		WHERE 1=1
+			and YEAR = #{year}
+			and MONTH = #{month}
+			
+	</update> 
+	
+	<!-- 자산 삭제하기 -->
+	<delete id="DeleteAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+		DELETE 
+		FROM ASSETS_MANAGEMENT
+		WHERE 1=1
+			and YEAR = #{year}
+			and MONTH = #{month}
+			
+	</delete>
+
+	<!-- 해당 연도 가져오기 -->
+	<select id="GetYear" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			YEAR
+		FROM
+			ACCOUNT_BOOK
+		GROUP BY
+			YEAR
+			
+	</select>
+	
+	<!-- 해당 월 가져오기 -->
+	<select id="GetMonth" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+		SELECT
+			MONTH
+		FROM
+			ACCOUNT_BOOK
+		WHERE 1=1
+			AND YEAR = #{year}
+		GROUP BY
+			MONTH
+	</select>
+	
+</mapper>

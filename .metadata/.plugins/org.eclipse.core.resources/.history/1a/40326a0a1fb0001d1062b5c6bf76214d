@@ -1,0 +1,66 @@
+package com.projectmoon.persistence;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.projectmoon.domain.AccountBookVO;
+
+
+public class AccountBookDaoImple implements AccountBookDao {
+	
+	private static final String NAMESPACE = "com.projectmoon.persistence.AccountBookMapper";
+
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@Override
+	public int InsertAccountBook(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NAMESPACE + ".InsertAccountBook", accountBookVO);
+	}
+
+	@Override
+	public List<AccountBookVO> SelectAccountBookList(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".SelectAccountBookList", accountBookVO);
+	}
+
+	@Override
+	public int UpdateAccountBook(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NAMESPACE + ".UpdateAccountBook", accountBookVO);
+	}
+
+	@Override
+	public int DeleteAccountBook(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NAMESPACE + ".DeleteAccountBook", accountBookVO);
+	}
+	
+	@Override
+	public int InsertAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NAMESPACE + ".InsertAssetsManagement", accountBookVO);
+	}
+	
+	@Override
+	public List<AccountBookVO> SelectAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".SelectAssetsManagement", accountBookVO);
+	}
+	
+	@Override
+	public int UpdateAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NAMESPACE + ".UpdateAssetsManagement", accountBookVO);
+	}
+
+	@Override
+	public int DeleteAssetsManagement(AccountBookVO accountBookVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NAMESPACE + ".DeleteAssetsManagement", accountBookVO);
+	}
+
+}

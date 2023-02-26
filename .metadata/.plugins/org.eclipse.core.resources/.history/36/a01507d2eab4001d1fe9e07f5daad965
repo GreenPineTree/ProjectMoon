@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectmoon.persistence.FinancialStatementsMapper">
+<!-- 		<resultMap type="HashMap" id="ListInMap"> -->
+<!-- 		<result property="kcode" column="kcode"/> -->
+<!-- 		<result property="kname" column="kname"/> -->
+<!-- 		<result property="kbday" column="kbday"/> -->
+<!-- 		<result property="kstbit" column="kstbit"/> -->
+<!-- 		<result property="kindate" column="kindate"/> -->
+<!-- 		<result property="scode" column="scode"/> -->
+<!-- 		<result property="sname" column="sname"/> -->
+<!-- 		<result property="bname" column="bname"/> -->
+<!-- 		<result property="tname" column="tname"/> -->
+<!-- 		<result property="jjjname" column="jjjname"/> -->
+<!-- 		<result property="name" column="name"/> -->
+<!-- 		<result property="ilday" column="ilday"/> -->
+<!-- 		<result property="score" column="score"/> -->
+<!-- 		<result property="yymm" column="yymm"/> -->
+<!-- 		<result property="kkjcode" column="kkjcode"/> -->
+<!-- 		<result property="kkjname" column="kkjname"/> -->
+<!-- 	</resultMap> -->
+	
+	<!-- 주식 정보 입력 -->
+	<insert id="InsertStock" parameterType="com.projectmoon.domain.StockVO">
+		INSERT INTO STOCK (
+			country
+			, market
+			, ticker
+			, name
+			, year
+			, month
+			, minimum
+			, maximum
+			, dividendPerShareYear
+			, dividendPerShare
+			, odds
+			, movingAverage05
+			, movingAverage20
+			, movingAverage60
+			, movingAverage120
+		)
+		values (
+			#{country}
+			, #{market}
+			, #{ticker}
+			, #{name}
+			, #{year}
+			, #{month}
+			, #{minimum}
+			, #{maximum}
+			, #{dividendPerShareYear}
+			, #{dividendPerShare}
+			, #{odds}
+			, #{movingAverage05}
+			, #{movingAverage20}
+			, #{movingAverage60}
+			, #{movingAverage120}
+		)
+	</insert>
+	
+	<!-- 주식 정보 가져오기 -->
+	<select id="SelectStock" parameterType="com.projectmoon.domain.StockVO" resultType="com.projectmoon.domain.StockVO">
+		SELECT 
+			country
+			, market
+			, ticker
+			, name
+			, year
+			, month
+			, minimum
+			, maximum
+			, dividendPerShareYear
+			, dividendPerShare
+			, odds
+			, movingAverage05
+			, movingAverage20
+			, movingAverage60
+			, movingAverage120
+		FROM STOCK
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+			<if test="year != null and year != ''">
+				and year = #{year}
+			</if>
+			<if test="month != null and month != ''">
+				and month = #{month}
+			</if>
+	</select>
+	
+	<!-- 주식 정보 수정하기 -->
+	<update id="UpdateStock" parameterType="com.projectmoon.domain.StockVO">
+		UPDATE STOCK
+		SET
+			country = #{country}
+			, market = #{market}
+			, ticker = #{ticker}
+			, name = #{name}
+			, year = #{year}
+			, month = #{month}
+			, minimum = #{minimum}
+			, maximum = #{maximum}
+			, dividendPerShareYear = #{dividendPerShareYear}
+			, dividendPerShare = #{dividendPerShare}
+			, odds = #{odds}
+			, movingAverage05 = #{movingAverage05}
+			, movingAverage20 = #{movingAverage20}
+			, movingAverage60 = #{movingAverage60}
+			, movingAverage120 = #{movingAverage120}
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+	</update>
+	
+	<!-- 주식 정보 삭제하기 -->
+	<delete id="DeleteStock" parameterType="com.projectmoon.domain.StockVO" >
+		DELETE
+		FROM STOCK
+		WHERE 1=1
+			and country = #{country}
+			and market = #{market}
+			and ticker = #{ticker}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

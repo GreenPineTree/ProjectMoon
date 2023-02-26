@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CompanyController {
 	
 	
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/mainView")
 	public String companyMain() {
 		System.out.println("어서오세요 기업화면입니다");
 		

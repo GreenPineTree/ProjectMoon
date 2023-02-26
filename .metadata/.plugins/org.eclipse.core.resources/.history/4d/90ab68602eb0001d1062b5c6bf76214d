@@ -1,0 +1,32 @@
+package com.projectmoon.persistence;
+
+import java.util.List;
+import java.util.Map;
+
+
+import com.projectmoon.domain.AccountBookVO;
+import com.projectmoon.domain.CommonVO;
+
+
+
+
+public interface CdCommonDao {
+	
+	// 공통코드 코드 가져오기
+	public List<CommonVO> selectCode(CommonVO commonvo);
+	
+	// 코드에 맞는 카테고리 가져오기
+	public List<CommonVO> selectMainCategory(CommonVO commonvo);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
