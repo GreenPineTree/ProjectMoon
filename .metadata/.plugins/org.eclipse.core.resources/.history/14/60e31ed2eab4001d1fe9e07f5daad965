@@ -1,5 +1,0 @@
-#Database
-MariaDB.driverClassName=org.mariadb.jdbc.Driver
-MariaDB.url=jdbc:mariadb://cheongso9001.synology.me:3307/cheongso9001
-MariaDB.username=cheongso9001
-MariaDB.password=Pcsng13245+

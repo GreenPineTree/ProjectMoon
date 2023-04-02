@@ -1,0 +1,99 @@
+package com.projectmoon.stock;
+
+import java.io.Serializable;
+
+public class StockVO implements Serializable{
+	
+	/**
+	 * 
+	 */
+	
+	// stock - 주가테이블
+	private String country; // 국가
+	private String market; // 시장
+	private String ticker; // 티커
+	private String name; // 회사
+	private String yymm; // 기준년도
+	private String minimum; // 해당월 최저가
+	private String maximum; // 해당월 최고가
+	private String startingPrice; // 해당월 시가
+	private String closingPrice; // 해당월 종가
+	
+	
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getMarket() {
+		return market;
+	}
+	public void setMarket(String market) {
+		this.market = market;
+	}
+	public String getTicker() {
+		return ticker;
+	}
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getYymm() {
+		return yymm;
+	}
+	public void setYymm(String yymm) {
+		this.yymm = yymm;
+	}
+	public String getMinimum() {
+		return minimum;
+	}
+	public void setMinimum(String minimum) {
+		this.minimum = minimum;
+	}
+	public String getMaximum() {
+		return maximum;
+	}
+	public void setMaximum(String maximum) {
+		this.maximum = maximum;
+	}
+	public String getStartingPrice() {
+		return startingPrice;
+	}
+	public void setStartingPrice(String startingPrice) {
+		this.startingPrice = startingPrice;
+	}
+	public String getClosingPrice() {
+		return closingPrice;
+	}
+	public void setClosingPrice(String closingPrice) {
+		this.closingPrice = closingPrice;
+	}
+	
+	@Override
+	public String toString() {
+		return "StockVO [country=" + country + ", market=" + market + ", ticker=" + ticker + ", name=" + name
+				+ ", yymm=" + yymm + ", minimum=" + minimum + ", maximum=" + maximum + ", startingPrice="
+				+ startingPrice + ", closingPrice=" + closingPrice + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -4,9 +4,7 @@
 <fullyQualifiedTypeName name="com.projectmoon.service.FinancialStatementsService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.FinancialStatementsDao"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.FinancialStatementsVO"/>
-<fullyQualifiedTypeName name="com.projectmoon.service.StockService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.StockDao"/>
-<fullyQualifiedTypeName name="com.projectmoon.domain.StockVO"/>
 <fullyQualifiedTypeName name="com.projectmoon.service.WorldnewsService"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.WorldnewsDao"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.WorldnewsVO"/>
@@ -19,7 +17,6 @@
 <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
 <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="com.projectmoon.service.CdCommonService"/>
@@ -29,13 +26,22 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.time.LocalDate"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
 <fullyQualifiedTypeName name="com.projectmoon.persistence.CdCommonDao"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.CommonVO"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.projectmoon.domain.AccountBookVO"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.CompanyDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.CompanyVO"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.CompanyService"/>
+<fullyQualifiedTypeName name="com.projectmoon.persistence.AllocationDao"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.AllocationVO"/>
+<fullyQualifiedTypeName name="com.projectmoon.domain.StockVO"/>
+<fullyQualifiedTypeName name="org.springframework.ui.ModelMap"/>
+<fullyQualifiedTypeName name="com.projectmoon.service.StockService"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestMapping"/>
 </qualifiedTypeNameHistroy>

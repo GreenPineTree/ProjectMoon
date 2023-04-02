@@ -33,7 +33,14 @@
 	
 	<!-- typeAlises : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
 	<typeAliases>
-		<package name="com.projectmoon.domain" />
+		<package name="com.projectmoon.accountBook" />
+		<package name="com.projectmoon.allocation" />
+		<package name="com.projectmoon.cdCommon" />
+		<package name="com.projectmoon.company" />
+		<package name="com.projectmoon.financialStatements" />
+		<package name="com.projectmoon.main" />
+		<package name="com.projectmoon.stock" />
+		<package name="com.projectmoon.worldnews" />
 	</typeAliases>
 </configuration>
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectmoon.persistence.StockMapper">
+	
+	<!-- 주식 정보 입력 -->
+	<insert id="InsertStock" parameterType="com.projectmoon.domain.StockVO">
+		INSERT INTO STOCK (
+			COUNTRY
+			, MARKET
+			, TICKER
+			, NAME
+			, YYMM
+			, MINIMUM
+			, MAXIMUM
+			, STARTING_PRICE
+			, CLOSING_PRICE
+		)
+		values (
+			#{country}
+			, #{market}
+			, #{ticker}
+			, #{name}
+			, #{yymm}
+			, #{minimum}
+			, #{maximum}
+			, #{startingPrice}
+			, #{closingPrice}
+		)
+	</insert>
+	
+	<!-- 주식 정보 가져오기 -->
+	<select id="SelectStock" parameterType="com.projectmoon.domain.StockVO" resultType="com.projectmoon.domain.StockVO">
+		SELECT 
+			COUNTRY
+			, MARKET
+			, TICKER
+			, NAME
+			, YYMM
+			, MINIMUM
+			, MAXIMUM
+			, STARTING_PRICE
+			, CLOSING_PRICE
+		FROM STOCK
+		WHERE 1=1
+			and COUNTRY = #{country}
+			and MARKET = #{market}
+			and TICKER = #{ticker}
+			<if test="yymm != null and yymm != ''">
+				and YYMM = #{yymm}
+			</if>
+	</select>
+	
+	<!-- 주식 정보 수정하기 -->
+	<update id="UpdateStock" parameterType="com.projectmoon.domain.StockVO">
+		UPDATE STOCK
+		SET
+			COUNTRY = #{country}
+			, MARKET = #{market}
+			, TICKER = #{ticker}
+			, NAME = #{name}
+			, YYMM = #{yymm}
+			, MINIMUM = #{minimum}
+			, MAXIMUM = #{maximum}
+			, STARTING_PRICE = #{startingPrice} 
+			, CLOSING_PRICE = #{closingPrice}
+		WHERE 1=1
+			AND COUNTRY = #{country}
+			AND MARKET = #{market}
+			AND TICKER = #{ticker}
+			AND YYMM = #{yymm}
+			
+	</update>
+	
+	<!-- 주식 정보 삭제하기 -->
+	<delete id="DeleteStock" parameterType="com.projectmoon.domain.StockVO" >
+		DELETE
+		FROM STOCK
+		WHERE 1=1
+			and COUNTRY = #{country}
+			and MARKET = #{market}
+			and TICKER = #{ticker}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

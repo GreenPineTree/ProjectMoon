@@ -4,18 +4,224 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script type="text/javascript">
-<!-- 등록 함수 -->
-function login(){
-	var frm = document.getElementById("loginfrm");
+
+$(document).ready(function(){
+
+})
+var num = 0;
+
+
+function addrow(){
+	var division = $('#division').val();
+	var divisionDetail = $('#divisionDetail').val();
+	var divisionSubDetail = $('#divisionSubDetail').val()
+	var bank = $('#bank').val();
+	var divisionText = $('#division option:checked').text();
+	var divisionDetailText = $('#divisionDetail option:checked').text();
+	var divisionSubDetailText = $('#divisionSubDetail option:checked').text()
+	var bankText = $('#bank option:checked').text();
 	
-	frm.action="<c:url value='/main/main.action'/>";
-	frm.submit();
+	var list = '';
+	list += '<div id="accountDiv_'+num+'">';
+	list += '<br>';
+	list += '<table>';
+	list += '<input type="hidden" id="num" name="num" value="'+num+'">';
+	list += '<select id="division_'+num+'" name="division_'+num+'" onchange="divisionChange('+num+', this.value);"></select>';
+	list += '<select id="divisionDetail_'+num+'" name="divisionDetail_'+num+'" onchange="divisionDetailChange('+num+', this.value);"></select>';
+	list += '<select id="divisionSubDetail_'+num+'" name="divisionSubDetail_'+num+'" onchange="divisionSubDetailChange('+num+', this.value);"></select>';
+	list += '<select id="bank_'+num+'" name="bank_'+num+'"></select>';
+	list += '<tr>';
+	list += '<td><span>구분</span></td>';
+	list += '<td><input type="text" value="'+divisionText+'" readonly></td>'
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>구분1</span></td>';
+	list += '<td><input type="text" value="'+divisionDetailText+'" readonly></td>'
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>은행From</span></td>';
+	list += '<td><input type="text" value="'+divisionSubDetailText+'" readonly></td>'
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>은행To</span></td>';
+	list += '<td><input type="text" value="'+bankText+'" readonly></td>'
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>날짜</span></td>';
+	list += '<td><input type="date" id="date_'+num+'" name="date_'+num+'" ></td>';
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>금액</span></td>';
+	list += '<td><input type="number" id="amount_'+num+'" name="amount_'+num+'"></td>';
+	list += '</tr>';
+	list += '<tr>';
+	list += '<td><span>수수료</span></td>';
+	list += '<td><input type="number" id="detail_'+num+'" name="detail_'+num+'" value="0"></td>';
+	list += '</tr>';
+	list += '</table>';
+	list += '<button id="deleteAccount_'+num+'" name="deleteAccount_'+num+'" onclick="deleteAccount('+num+')">거래삭제</button>';
+	list += '</div>';
 	
+	getCode(num);
+	
+	num++;
+	
+	$('#registDetail').append(list);
 }
 
+
+function getCode(num){
+	console.log(num);
+	var url = '/cdCommon/selectCode';
+	var data = 'AB';
+	$.ajax({
+		type : 'POST',
+		url : url,
+		contentType : 'application/json',
+		data : JSON.stringify({'code' : data}),
+		dataType : 'json',
+		success : function(resultData){
+			var list = '';
+			list += '<option value="" selected>선택';
+			for(var i = 0; i < resultData.length; i++){
+				var item = resultData[i];
+				list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+			}
+			$('#registDetail #division_'+num).html(list);
+		}
+	})
+}
+
+function divisionChange(num, obj){
+	console.log(num);
+	console.log(obj);
+	$('#registDetail #divisionDetail_'+num).val('');
+	$('#registDetail #divisionSubDetail_'+num).val('');
+	$('#registDetail #bank_'+num).val('');
+	var data = obj;
+	var url = '/cdCommon/selectCode'
+	$.ajax({
+		type : 'POST',
+		url : url,
+		contentType : 'application/json',
+		data : JSON.stringify({'code' : data}),
+		dataType : 'json',
+		success : function(resultData){
+			var list = '';
+			list += '<option value="" selected>선택';
+				for(var i = 0; i < resultData.length; i++){
+					var item = resultData[i];
+					list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+				}
+			$('#registDetail #divisionDetail_'+num).html(list);
+		}
+	})
+}
+
+function divisionDetailChange(num, obj){
+	console.log(num);
+	console.log(obj);
+	$('#registDetail #divisionSubDetail_'+num).val('');
+	$('#registDetail #bank_'+num).val('');
+	var data = obj;
+	var url = '/cdCommon/selectCode'
+	$.ajax({
+		type : 'POST',
+		url : url,
+		contentType : 'application/json',
+		data : JSON.stringify({'code' : data}),
+		dataType : 'json',
+		success : function(resultData){
+			var list = '';
+			list += '<option value="" selected>선택';
+			for(var i = 0; i < resultData.length; i++){
+				var item = resultData[i];
+				list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+			}
+			$('#registDetail #divisionSubDetail_'+num).html(list);
+		}
+	})
+}
+
+function divisionSubDetailChange(num, obj){
+	console.log(num);
+	console.log(obj);
+	$('#registDetail #bank_'+num).val('');
+	var data = 'BANK';
+	var url = '/cdCommon/selectCode'
+	$.ajax({
+		type : 'POST',
+		url : url,
+		contentType : 'application/json',
+		data : JSON.stringify({'code' : data}),
+		dataType : 'json',
+		success : function(resultData){
+			var list = '';
+			list += '<option value="" selected>선택';
+			for(var i = 0; i < resultData.length; i++){
+				var item = resultData[i];
+				list += '<option value="'+item.mainCategory+'">'+item.properties+'';
+			}
+			$('#registDetail #bank_'+num).html(list);
+		}
+	})
+}
+
+function deleteAccount(num){
+	var div = $('#registDetail #accountDiv_'+num);
+	div.remove();
+}
+
+function regist(){
+	var url = '/accountBook/regist';
+	for(var i = 0; i < num; i++){
+		var division = $('#division_' + i).val();
+		var divisionDetail = $('#divisionDetail_' + i).val();
+		var divisionSubDetail = $('#divisionSubDetail_' + i).val();
+		var bank = $('#bank_' + i).val();
+		var date = $('#date_' + i).val();
+		var amount = $('#amount_' + i).val();
+		var detail = $('#detail_' + i).val();
+		
+		if(date == null || date == ''){
+			break;
+		}
+		
+		if(amount == null || amount == '' ){
+			break;
+		}
+		
+		if(detail == null || detail == '' ){
+			break;
+		}
+		
+		
+		$.ajax({
+			type : 'POST',
+			url : url,
+			contentType : 'application/json',
+			data : JSON.stringify({
+					'division' : division,
+					'divisionDetail' : divisionDetail,
+					'divisionSubDetail' : divisionSubDetail,
+					'bank' : bank,
+					'date' : date,
+					'amount' : amount,
+					'detail' : detail
+				}),
+			dataType : 'json',
+			success : function(resultData){
+				console.log(resultData);
+			}
+		})
+	}
+
+}
+	
 
 </script>
 
@@ -23,12 +229,27 @@ function login(){
 <title>가계부</title>
 </head>
 <body>
-	<!-- <h1>부자되고 싶어요!!</h1> -->
-
-	<P>The time on the server is ${serverTime}.</P>
-	<form id="loginfrm" name="loginfrm" method="post">>
-		<input type="text" id="" name="">
+<!-- 구분및 은행 선택 -->
+	<div>
+		<!-- 수익 비용 이체 구분 -->
+		<span>거래 종류</span>
+		<select id="division" name="division">
+		</select>
+	
+		<select id="divisionDetail" name="divisionDetail">
+		</select>
+		
+		<select id="divisionSubDetail" name="divisionSubDetail">
+		</select>
+		
+		<select id="bank" name="bank">
+		</select>
+		<button id="addrow" name="addrow" onclick="addrow();">거래추가</button>
 		<button id="regist" name="regist" onclick="regist();">등록</button>
-	</form>
+	</div>
+	<div id="registDetail">
+			
+	</div>
+
 </body>
 </html>

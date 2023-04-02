@@ -1,0 +1,51 @@
+package com.projectmoon.allocation.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.projectmoon.allocation.AllocationVO;
+import com.projectmoon.allocation.mapper.AllocationDao;
+import com.projectmoon.allocation.service.AllocationService;
+
+
+
+@Service
+public class AllocationServiceImpl implements AllocationService{
+
+	@Autowired
+	private AllocationDao allocationDao;
+
+	// 배당 정보 입력
+	@Override
+	public int InsertAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return allocationDao.InsertAllocation(allocationVO);
+	}
+	
+	// 배당 정보 가져오기
+	@Override
+	public List<AllocationVO> SelectAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return allocationDao.SelectAllocation(allocationVO);
+	}
+
+	// 배당 정보 수정하기
+	@Override
+	public int UpdateAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return allocationDao.UpdateAllocation(allocationVO);
+	}
+
+	// 배당 정보 삭제하기
+	@Override
+	public int DeleteAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return allocationDao.DeleteAllocation(allocationVO);
+	}
+
+	
+	
+	
+}

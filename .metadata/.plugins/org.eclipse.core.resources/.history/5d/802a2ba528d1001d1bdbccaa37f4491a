@@ -1,0 +1,34 @@
+package com.projectmoon.company.mapper;
+
+import java.util.List;
+
+import com.projectmoon.domain.CompanyVO;
+
+
+
+
+public interface CompanyDao {
+	
+	// 회사 정보 입력
+	public int InsertCompany(CompanyVO companyVO);
+	
+	// 회사 정보 불러오기
+	public CompanyVO selectCompany(CompanyVO companyVO);
+	
+	// 회사 정보 수정
+	public int UpdateCompany(CompanyVO companyVO);
+	
+	
+	// 회사 정보 삭제
+	public int DeleteCompany(CompanyVO companyVO);
+	
+	// 회사 리스트 불러오기
+	public List<CompanyVO> getCompanyList(CompanyVO companyVO);
+	
+	// 나라 리스트 불러오기
+	public List<CompanyVO> getCountryList();
+	
+	// 시장 레스트 불러오기
+	public List<CompanyVO> getMarketList(CompanyVO companyVO);
+	
+}

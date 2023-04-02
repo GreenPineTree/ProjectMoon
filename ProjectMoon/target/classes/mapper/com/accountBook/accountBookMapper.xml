@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.projectmoon.persistence.AccountBookMapper">
+<mapper namespace="accountBookMapper">
 	
 	<!-- 수입/지출/이체 구분에 따른 2차 구분 불러오기 -->
 	<select id="select">
@@ -8,7 +8,7 @@
 	</select>
 	
 	<!-- 가계부 정보 입력 -->
-	<insert id="InsertAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+	<insert id="InsertAccountBook" parameterType="AccountBookVO">
 		INSERT INTO ACCOUNT_BOOK (
 			YEAR
 			, MONTH
@@ -35,7 +35,7 @@
 	</insert>
 	
 	<!-- 가계부 목록 가져오기 -->
-	<select id="SelectAccountBookList" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="SelectAccountBookList" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			YEAR
 			, MONTH
@@ -58,7 +58,7 @@
 	</select> 
 
 	<!-- 가계부 수정하기 -->
-	<update id="UpdateAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+	<update id="UpdateAccountBook" parameterType="AccountBookVO">
 		UPDATE ACCOUNT_BOOK
 		SET
 			YEAR = #{year}
@@ -77,7 +77,7 @@
 	</update> 
 	
 	<!-- 가계부 삭제하기 -->
-	<delete id="DeleteAccountBook" parameterType="com.projectmoon.domain.AccountBookVO">
+	<delete id="DeleteAccountBook" parameterType="AccountBookVO">
 		DELETE 
 		FROM ACCOUNT_BOOK
 		WHERE 1=1
@@ -88,7 +88,7 @@
 	
 	
 	<!-- 자산 정보 입력 -->
-	<insert id="InsertAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+	<insert id="InsertAssetsManagement" parameterType="AccountBookVO">
 		INSERT INTO ASSETS_MANAGEMENT (
 			YEAR
 			, MONTH
@@ -104,24 +104,22 @@
 	</insert> 
 	
 	<!-- 자산 목록 가져오기 -->
-	<select id="SelectAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="SelectAssetsManagement" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			YEAR
 			, MONTH
 			, AMOUNT
-			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANK
+			, BANK
+			, (SELECT PROPERTIES FROM CD_CODE WHERE code = 'BANK' AND MAIN_CATEGORY = a.BANK) BANKNM
 		FROM ASSETS_MANAGEMENT a
 		WHERE 1=1
 			AND YEAR = #{year}
 			AND MONTH = #{month}
-			<if test="bank != null and bank != ''">
-				AND BANK = #{bank}
-			</if>
-			
+						
 	</select>
 	
 	<!-- 자산 수정하기 -->
-	<update id="UpdateAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+	<update id="UpdateAssetsManagement" parameterType="AccountBookVO">
 		UPDATE ASSETS_MANAGEMENT
 		SET
 			YEAR = #{year}
@@ -136,7 +134,7 @@
 	</update> 
 	
 	<!-- 자산 삭제하기 -->
-	<delete id="DeleteAssetsManagement" parameterType="com.projectmoon.domain.AccountBookVO">
+	<delete id="DeleteAssetsManagement" parameterType="AccountBookVO">
 		DELETE 
 		FROM ASSETS_MANAGEMENT
 		WHERE 1=1
@@ -146,7 +144,7 @@
 	</delete>
 
 	<!-- 해당 연도 가져오기 -->
-	<select id="GetYear" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="GetYear" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			YEAR
 		FROM
@@ -157,7 +155,7 @@
 	</select>
 	
 	<!-- 해당 월 가져오기 -->
-	<select id="GetMonth" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="GetMonth" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			MONTH
 		FROM
@@ -169,7 +167,7 @@
 	</select>
 	
 	<!-- 월말정산 금액 가져오기 -->
-	<select id="SelectSumAssets" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="SelectSumAssets" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			SUM(AMOUNT) AS amount
 		FROM
@@ -190,7 +188,7 @@
 	</select>
 	
 	<!-- 월말정산 자산 가져오기 -->
-	<select id="SelectAssetsBalance" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="SelectAssetsBalance" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 			YEAR
 			, MONTH
@@ -206,7 +204,7 @@
 	
 	<!-- 가계부 차트 -->
 	<!-- 1. GetYear, GetMonth를 통해 기록한 연/월을 구하고 이를 통해 DIVISION_DETAIL을 구한다 -->
-	<select id="getDivisionDetail" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="getDivisionDetail" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT 
 			DIVISION_DETAIL
 		FROM 
@@ -219,7 +217,7 @@
 	</select>
 	
 	<!-- 2. getDivisionDetail을 통해 구한 구분을통해 세부항목의 합산과 이름을 구한다 -->
-	<select id="getDivsionSubDetailSum" parameterType="com.projectmoon.domain.AccountBookVO" resultType="com.projectmoon.domain.AccountBookVO">
+	<select id="getDivsionSubDetailSum" parameterType="AccountBookVO" resultType="AccountBookVO">
 		SELECT
 		SUM(AMOUNT) AS amount
 		, (SELECT PROPERTIES FROM CD_CODE WHERE code = #{divisionDetail} AND MAIN_CATEGORY = a.DIVISION_SUB_DETAIL) DIVISION_SUB_DETAIL

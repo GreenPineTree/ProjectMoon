@@ -1,0 +1,51 @@
+package com.projectmoon.allocation.mapper.impl;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.projectmoon.allocation.AllocationVO;
+import com.projectmoon.allocation.mapper.AllocationDao;
+
+
+@Repository
+//@Component
+//- 영속 계층(Persistence Layer)의 DB 관련 기능을 담당
+//- Spring Component bean으로 등록함
+//- 스프링 프레임워크가 bean을 생성하기 위해서는
+//	 root-context.xml에 bean으로 등록해야 함
+//- <context: component-scan .. />
+public class AllocationDaoImple implements AllocationDao{
+
+	private static final String NAMESPACE = "allocationMapper";
+
+	@Autowired
+	private SqlSession sqlSession;
+
+	@Override
+	public int InsertAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NAMESPACE + ".InsertAllocation", allocationVO);
+	}
+
+	@Override
+	public List<AllocationVO> SelectAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".SelectAllocation", allocationVO);
+	}
+
+	@Override
+	public int UpdateAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NAMESPACE + ".UpdateAllocation", allocationVO);
+	}
+
+	@Override
+	public int DeleteAllocation(AllocationVO allocationVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(NAMESPACE + ".DeleteAllocation", allocationVO);
+	}
+
+}

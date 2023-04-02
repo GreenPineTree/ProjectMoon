@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- preferences에서 미리 dtd를 등록해두고 생성함 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<properties>
+		<!-- * property - name : mapper.xml에서 사용될 이름 - value : DB 테이블 및 컬럼 이름 -->
+		
+		<!-- 공통코드 -->
+		<property value="cd_code" name="cd_code"/>
+		<property value="code" name="code"/>
+		<property value="mainCategory" name="main_category"/>
+		<property value="properties" name="properties"/>
+		
+		<!-- 가계부 -->
+		<property value="account_book" name="account_book"/>
+		<property value="year" name="year"/>
+		<property value="month" name="month"/>
+		<property value="division" name="division"/>
+		<property value="divisionDetail" name="division_detail"/>
+		<property value="divisionSubDetail" name="division_sub_detail"/>
+		<property value="amount" name="amount"/>
+		<property value="detail" name="detail"/>
+		<property value="date" name="date"/>
+		<property value="bank" name="bank"/>
+		
+		
+	</properties>
+	
+	<!-- underscore 명명법을 camel 명명법으로 가능하도록 세팅 -->
+	<settings>
+		<setting value="true" name="mapUnderscoreToCamelCase" />
+	</settings>
+	
+	<!-- typeAlises : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
+	<typeAliases>
+		<package name="com.projectmoon" />
+	</typeAliases>
+</configuration>
+

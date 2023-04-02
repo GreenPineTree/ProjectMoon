@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.projectmoon.persistence.FinancialStatementsMapper">
+<mapper namespace="financialStatementsMapper">
 <!-- 		<resultMap type="HashMap" id="ListInMap"> -->
 <!-- 		<result property="kcode" column="kcode"/> -->
 <!-- 		<result property="kname" column="kname"/> -->
@@ -21,7 +21,7 @@
 <!-- 	</resultMap> -->
 	
 	<!-- 기업 정보입력 -->
-	<insert id="InsertCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<insert id="InsertCompany" parameterType="FinancialStatementsVO">
 		INSERT INTO COMPANY (
 			country
 			, market
@@ -44,7 +44,7 @@
 	</insert>
 
 	<!-- 기업 재무상태표 입력 -->
-	<insert id="InsertFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<insert id="InsertFinancialStatements" parameterType="FinancialStatementsVO">
 		INSERT INTO FINANCIAL_STATEMENTS (
 			country
 			, market
@@ -83,7 +83,7 @@
 	</insert>	
 	
 	<!-- 기업 정보 목록 가져오기 -->
-	<select id="SelectCompanyList" parameterType="com.projectmoon.domain.FinancialStatementsVO" resultType="com.projectmoon.domain.FinancialStatementsVO">
+	<select id="SelectCompanyList" parameterType="FinancialStatementsVO" resultType="FinancialStatementsVO">
 		SELECT
 			country
 			, market
@@ -113,7 +113,7 @@
 	</select>
 
 	<!-- 기업 재무상태표 가져오기 -->
-	<select id="SelectFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO" resultType="com.projectmoon.domain.FinancialStatementsVO">
+	<select id="SelectFinancialStatements" parameterType="FinancialStatementsVO" resultType="FinancialStatementsVO">
 		SELECT
 			country
 			, market
@@ -144,7 +144,7 @@
 	</select>
 
 	<!-- 기업 정보 수정하기 -->
-	<update id="UpdateCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<update id="UpdateCompany" parameterType="FinancialStatementsVO">
 		UPDATE COMPANY
 		SET
 			country = #{country}
@@ -161,7 +161,7 @@
 	</update>
 	
 	<!-- 기업 재무재표 수정하기 -->
-	<update id="UpdateFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<update id="UpdateFinancialStatements" parameterType="FinancialStatementsVO">
 		UPDATE FINANCIAL_STATEMENTS
 		SET
 			country = #{country}
@@ -190,7 +190,7 @@
 	</update>
 	
 	<!-- 기업 정보 삭제하기 -->
-	<delete id="DeleteCompany" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<delete id="DeleteCompany" parameterType="FinancialStatementsVO">
 		DELETE
 		FROM COMPANY
 		WHERE 1=1
@@ -201,7 +201,7 @@
 	</delete>
 	
 	<!-- 기업 재무상태표 삭제하기 -->
-	<delete id="DeleteFinancialStatements" parameterType="com.projectmoon.domain.FinancialStatementsVO">
+	<delete id="DeleteFinancialStatements" parameterType="FinancialStatementsVO">
 		DELETE
 		FROM FINANCIAL_STATEMENTS
 		WHERE 1=1

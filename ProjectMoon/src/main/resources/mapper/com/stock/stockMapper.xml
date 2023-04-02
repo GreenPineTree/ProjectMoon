@@ -1,127 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.projectmoon.persistence.FinancialStatementsMapper">
-<!-- 		<resultMap type="HashMap" id="ListInMap"> -->
-<!-- 		<result property="kcode" column="kcode"/> -->
-<!-- 		<result property="kname" column="kname"/> -->
-<!-- 		<result property="kbday" column="kbday"/> -->
-<!-- 		<result property="kstbit" column="kstbit"/> -->
-<!-- 		<result property="kindate" column="kindate"/> -->
-<!-- 		<result property="scode" column="scode"/> -->
-<!-- 		<result property="sname" column="sname"/> -->
-<!-- 		<result property="bname" column="bname"/> -->
-<!-- 		<result property="tname" column="tname"/> -->
-<!-- 		<result property="jjjname" column="jjjname"/> -->
-<!-- 		<result property="name" column="name"/> -->
-<!-- 		<result property="ilday" column="ilday"/> -->
-<!-- 		<result property="score" column="score"/> -->
-<!-- 		<result property="yymm" column="yymm"/> -->
-<!-- 		<result property="kkjcode" column="kkjcode"/> -->
-<!-- 		<result property="kkjname" column="kkjname"/> -->
-<!-- 	</resultMap> -->
+<mapper namespace="stockMapper">
 	
 	<!-- 주식 정보 입력 -->
-	<insert id="InsertStock" parameterType="com.projectmoon.domain.StockVO">
+	<insert id="InsertStock" parameterType="StockVO">
 		INSERT INTO STOCK (
-			country
-			, market
-			, ticker
-			, name
-			, year
-			, month
-			, minimum
-			, maximum
-			, dividendPerShareYear
-			, dividendPerShare
-			, odds
-			, movingAverage05
-			, movingAverage20
-			, movingAverage60
-			, movingAverage120
+			COUNTRY
+			, MARKET
+			, TICKER
+			, NAME
+			, YYMM
+			, MINIMUM
+			, MAXIMUM
+			, STARTING_PRICE
+			, CLOSING_PRICE
 		)
 		values (
 			#{country}
 			, #{market}
 			, #{ticker}
 			, #{name}
-			, #{year}
-			, #{month}
+			, #{yymm}
 			, #{minimum}
 			, #{maximum}
-			, #{dividendPerShareYear}
-			, #{dividendPerShare}
-			, #{odds}
-			, #{movingAverage05}
-			, #{movingAverage20}
-			, #{movingAverage60}
-			, #{movingAverage120}
+			, #{startingPrice}
+			, #{closingPrice}
 		)
 	</insert>
 	
 	<!-- 주식 정보 가져오기 -->
-	<select id="SelectStock" parameterType="com.projectmoon.domain.StockVO" resultType="com.projectmoon.domain.StockVO">
+	<select id="SelectStock" parameterType="StockVO" resultType="StockVO">
 		SELECT 
-			country
-			, market
-			, ticker
-			, name
-			, year
-			, month
-			, minimum
-			, maximum
-			, dividendPerShareYear
-			, dividendPerShare
-			, odds
-			, movingAverage05
-			, movingAverage20
-			, movingAverage60
-			, movingAverage120
+			COUNTRY
+			, MARKET
+			, TICKER
+			, NAME
+			, YYMM
+			, MINIMUM
+			, MAXIMUM
+			, STARTING_PRICE
+			, CLOSING_PRICE
 		FROM STOCK
 		WHERE 1=1
-			and country = #{country}
-			and market = #{market}
-			and ticker = #{ticker}
-			<if test="year != null and year != ''">
-				and year = #{year}
-			</if>
-			<if test="month != null and month != ''">
-				and month = #{month}
+			and COUNTRY = #{country}
+			and MARKET = #{market}
+			and TICKER = #{ticker}
+			<if test="yymm != null and yymm != ''">
+				and YYMM = #{yymm}
 			</if>
 	</select>
 	
 	<!-- 주식 정보 수정하기 -->
-	<update id="UpdateStock" parameterType="com.projectmoon.domain.StockVO">
+	<update id="UpdateStock" parameterType="StockVO">
 		UPDATE STOCK
 		SET
-			country = #{country}
-			, market = #{market}
-			, ticker = #{ticker}
-			, name = #{name}
-			, year = #{year}
-			, month = #{month}
-			, minimum = #{minimum}
-			, maximum = #{maximum}
-			, dividendPerShareYear = #{dividendPerShareYear}
-			, dividendPerShare = #{dividendPerShare}
-			, odds = #{odds}
-			, movingAverage05 = #{movingAverage05}
-			, movingAverage20 = #{movingAverage20}
-			, movingAverage60 = #{movingAverage60}
-			, movingAverage120 = #{movingAverage120}
+			COUNTRY = #{country}
+			, MARKET = #{market}
+			, TICKER = #{ticker}
+			, NAME = #{name}
+			, YYMM = #{yymm}
+			, MINIMUM = #{minimum}
+			, MAXIMUM = #{maximum}
+			, STARTING_PRICE = #{startingPrice} 
+			, CLOSING_PRICE = #{closingPrice}
 		WHERE 1=1
-			and country = #{country}
-			and market = #{market}
-			and ticker = #{ticker}
+			AND COUNTRY = #{country}
+			AND MARKET = #{market}
+			AND TICKER = #{ticker}
+			AND YYMM = #{yymm}
+			
 	</update>
 	
 	<!-- 주식 정보 삭제하기 -->
-	<delete id="DeleteStock" parameterType="com.projectmoon.domain.StockVO" >
+	<delete id="DeleteStock" parameterType="StockVO" >
 		DELETE
 		FROM STOCK
 		WHERE 1=1
-			and country = #{country}
-			and market = #{market}
-			and ticker = #{ticker}
+			and COUNTRY = #{country}
+			and MARKET = #{market}
+			and TICKER = #{ticker}
 	</delete>
 	
 	

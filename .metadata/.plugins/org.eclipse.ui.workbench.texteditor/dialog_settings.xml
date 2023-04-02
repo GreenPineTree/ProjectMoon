@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="nowRevenue"/>
+		<item key="selection" value="divisionText"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="SelectSettle"/>
-			<item value="nowRevenue"/>
-			<item value="regist"/>
-			<item value="setNewSettle"/>
-			<item value="divisionDetail"/>
-			<item value="divisionSubDetail"/>
-			<item value="division"/>
-			<item value="SelectAccountBookList"/>
+			<item value="divisionText"/>
+			<item value="divisionChange"/>
+			<item value="&lt;a href=&quot;/&quot;&gt;&lt;button type=&quot;button&quot; id=&quot;mainView&quot;&gt;홈으로&lt;/button&gt;&lt;/a&gt;"/>
+			<item value="date"/>
+			<item value="getYear"/>
+			<item value="StockVO"/>
+			<item value="registDetail"/>
+			<item value="registmaximum"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
+			<item value="AllocationVO"/>
+			<item value="maximum_"/>
+			<item value="maximum"/>
+			<item value="minimum"/>
+			<item value="minimum_"/>
+			<item value="ticker"/>
+			<item value="market"/>
+			<item value="country"/>
+			<item value="YYMM"/>
+			<item value="sector"/>
 			<item value="Amount"/>
 			<item value="/mainView"/>
 			<item value="&lt;/span&gt;"/>
 			<item value="&lt;span&gt;"/>
-			<item value="accountBookDao"/>
-			<item value="mainCategory"/>
-			<item value="artifactId"/>
-			<item value="groupId"/>
-			<item value=".projectmoon."/>
-			<item value=".projectmoon"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="8"/>
-		<item key="DIALOG_Y_ORIGIN" value="316"/>
+		<item key="DIALOG_X_ORIGIN" value="439"/>
+		<item key="DIALOG_Y_ORIGIN" value="595"/>
 		<item key="DIALOG_WIDTH" value="288"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
